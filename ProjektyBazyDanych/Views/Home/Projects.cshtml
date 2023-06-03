@@ -1,0 +1,21 @@
+﻿@model IList<ProjektyBazyDanych.Entities.Projekt>  
+  
+@{  
+    ViewBag.Title = "Projekty";  
+}  
+<div><h2>Wykaz projektów</h2><br /></div>  
+<br/>
+
+<table class="table table-bordered table-responsive table-hover">  
+    <tr>  
+        <th width="170px"></th>  
+        <th>Projekty</th>  
+    </tr>  
+
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        <tr id="project-type-row-@Model[i].Id">  
+            <td id="name-@Model[i].Id">@Model[i].Rodzaj.Nazwa</td>
+        </tr>  
+    }
+</table> 

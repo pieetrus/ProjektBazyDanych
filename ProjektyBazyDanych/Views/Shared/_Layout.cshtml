@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ProjektyBazyDanych</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ProjektyBazyDanych.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <img style="margin-right:10px" width="50" height="50" src="https://media.licdn.com/dms/image/C5603AQG7eyz7TeiKHw/profile-displayphoto-shrink_800_800/0/1660810395153?e=2147483647&v=beta&t=miF6UGvpVJ0_pWUCKqSR8WU1_W4_W_RON-QNuTtEtlc"/>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Przedsiębiorstwo</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Strona główna</a>
+                        </li>
+                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Wykaz projektów
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="@Url.Action("AddProjectType", "Home")">Wykaz projektów</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("AddProjectType", "Home")">Dodaj rodzaj projektu</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("AddProjectStatus", "Home")">Dodaj status projektu</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("EditProjectType", "Home")">Edytuj rodzaj projektu</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("EditProjectStatus", "Home")">Edytuj status projektu</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("AddProject", "Home")">Dodaj projekt</a></li>
+                                <li><a class="dropdown-item" href="#">Projekty wg rodzaju</a></li>
+                                <li><a class="dropdown-item" href="#">Projekty wg statusu</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Edycja projektu</a></li>
+                            </ul>
+                        </li>   
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Wyszukaj projekt wg numeru
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Wyszukaj projekt wg tematu</a></li>
+                                <li><a class="dropdown-item" href="#">Wyszukaj projekt wg daty</a></li>
+                                <li><a class="dropdown-item" href="#">Wyszukaj projekt wg kwoty</a></li>
+                                <li><a class="dropdown-item" href="#">Statystyki projekty</a></li>
+                                <li><a class="dropdown-item" href="#">Projekty graficzne wg rodzaju</a></li>
+                                <li><a class="dropdown-item" href="#">Projekty graficzne wg statusu</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - Przedsiębiorstwo - Created by Jakub Pietrus - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
