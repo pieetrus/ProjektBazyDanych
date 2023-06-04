@@ -23,6 +23,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZGRQcm9qZWN0VHlwZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Repo/ProjektyBazyDanych/ProjektyBazyDanych/Views/Home/ChartStats.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDaGFydFN0YXRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Repo/ProjektyBazyDanych/ProjektyBazyDanych/Views/Home/EditProjectForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFZGl0UHJvamVjdEZvcm0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -61,6 +65,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Repo/ProjektyBazyDanych/ProjektyBazyDanych/Views/Home/ProjectsByType.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9qZWN0c0J5VHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Repo/ProjektyBazyDanych/ProjektyBazyDanych/Views/Home/ProjectsStats.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9qZWN0c1N0YXRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Repo/ProjektyBazyDanych/ProjektyBazyDanych/Views/Home/SearchProject.cshtml]

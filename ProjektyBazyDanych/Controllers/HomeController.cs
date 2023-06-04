@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using ProjektyBazyDanych.Entities;
 using ProjektyBazyDanych.ViewModels;
 using System.Collections.Generic;
@@ -257,21 +258,63 @@ namespace ProjektyBazyDanych.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult ProjectsStats()
+        {
+            var model = new ProjectsStatsViewModel
+            {
+                ProjectsCount = _context.Projekty.Count(),
+                PriceMin = _context.Projekty.Min(x => x.Kwota),
+                PriceMax = _context.Projekty.Max(x => x.Kwota),
+                PriceAvg = _context.Projekty.Average(x => x.Kwota)
+            };
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ChartStats()
+        {
+			var dict1 = _context.Projekty.Include(x => x.Rodzaj)
+				.GroupBy(x => x.Rodzaj).ToDictionary(x => x.Key, x => x.ToList());
+
+            var dict2 = _context.Projekty.Include(x => x.Status)
+                .GroupBy(x => x.Status).ToDictionary(x => x.Key, x => x.ToList());
+
+            var model1 = new List<DataPoint>();
+			var model2 = new List<DataPoint>();
+
+			foreach (var kvp in dict1)
+			{
+				model1.Add(new DataPoint(kvp.Value.Count, kvp.Key.Nazwa));
+			}
+
+            foreach (var kvp in dict2)
+            {
+                model2.Add(new DataPoint(kvp.Value.Count, kvp.Key.Nazwa));
+            }
+
+            ViewBag.DataPoints1 = JsonConvert.SerializeObject(model1, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
+			ViewBag.DataPoints2 = JsonConvert.SerializeObject(model2, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
+
+			return View();
+        }
+
         [HttpPost]
         public IActionResult SearchProject(SearchViewModel vm)
         {
             IList<Projekt> model = new List<Projekt>();
 
-			if (!string.IsNullOrEmpty(vm.Nr))
-			{
-				model = _context.Projekty
+            if (!string.IsNullOrEmpty(vm.Nr))
+            {
+                model = _context.Projekty
                     .Include(x => x.Rodzaj)
                     .Include(x => x.Status)
                     .Where(x => x.Nr == vm.Nr)
                     .ToList();
-			}
-			else if (!string.IsNullOrEmpty(vm.Temat))
-			{
+            }
+            else if (!string.IsNullOrEmpty(vm.Temat))
+            {
                 model = _context.Projekty
                     .Include(x => x.Rodzaj)
                     .Include(x => x.Status)
@@ -297,6 +340,8 @@ namespace ProjektyBazyDanych.Controllers
 
             return View("ProjectDetails", model);
         }
+
+
 
 
         [HttpDelete]
@@ -342,13 +387,13 @@ namespace ProjektyBazyDanych.Controllers
             var statuses = _context.Statusy.ToList();
             var types = _context.Rodzaje.ToList();
 
-			projectFormVM.Projekt = new()
-			{
-				DataRozpoczecia = DateTime.Now,
-				DataZakonczenia = DateTime.Now
-			};
+            projectFormVM.Projekt = new()
+            {
+                DataRozpoczecia = DateTime.Now,
+                DataZakonczenia = DateTime.Now
+            };
 
-			projectFormVM.Rodzaje = types;
+            projectFormVM.Rodzaje = types;
             projectFormVM.Statusy = statuses;
 
             return View("ProjectForm", projectFormVM);
