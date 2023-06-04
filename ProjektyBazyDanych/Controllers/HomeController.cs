@@ -114,7 +114,7 @@ namespace ProjektyBazyDanych.Controllers
             {
                 try
                 {
-                    var projectStatus= _context.Statusy.FirstOrDefault(x => x.Id == status.Id);
+                    var projectStatus = _context.Statusy.FirstOrDefault(x => x.Id == status.Id);
 
                     if (projectStatus == null)
                     {
@@ -159,7 +159,7 @@ namespace ProjektyBazyDanych.Controllers
         [HttpDelete]
         public ActionResult DeleteProjectStatus(int id)
         {
-            var projectStatus= _context.Statusy.FirstOrDefault(x => x.Id == id);
+            var projectStatus = _context.Statusy.FirstOrDefault(x => x.Id == id);
 
             if (projectStatus == null)
             {
@@ -188,7 +188,7 @@ namespace ProjektyBazyDanych.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddProject(ProjectFormViewModel projectFormVM)
+        public IActionResult ProjectForm(ProjectFormViewModel projectFormVM)
         {
             if (projectFormVM == null)
             {
@@ -199,6 +199,25 @@ namespace ProjektyBazyDanych.Controllers
             var types = _context.Rodzaje.ToList();
 
             projectFormVM.Projekt = new Projekt();
+            projectFormVM.Projekt.DataRozpoczecia = DateTime.Now;
+            projectFormVM.Projekt.DataZakonczenia = DateTime.Now;
+
+            projectFormVM.Rodzaje = types;
+            projectFormVM.Statusy = statuses;
+
+            return View(projectFormVM);
+        }
+
+        [HttpGet]
+        public IActionResult EditProjectForm(int Id)
+        {
+            var projectFormVM = new ProjectFormViewModel();
+
+            var project = _context.Projekty.FirstOrDefault(x => x.Id == Id);
+            var statuses = _context.Statusy.ToList();
+            var types = _context.Rodzaje.ToList();
+
+            projectFormVM.Projekt = project;
             projectFormVM.Projekt.DataRozpoczecia = DateTime.Now;
             projectFormVM.Projekt.DataZakonczenia = DateTime.Now;
 
@@ -228,7 +247,64 @@ namespace ProjektyBazyDanych.Controllers
             projectFormVM.Rodzaje = types;
             projectFormVM.Statusy = statuses;
 
-            return View("AddProject", projectFormVM);
+            return View("ProjectForm", projectFormVM);
+        }
+
+
+
+        [HttpDelete]
+        public ActionResult DeleteProject(int Id)
+        {
+            var project = _context.Projekty.FirstOrDefault(x => x.Id == Id);
+
+            if (project == null)
+            {
+                throw new Exception("Projekt o takim id nie został znaleziony");
+            }
+
+            _context.Projekty.Remove(project);
+
+            var success = _context.SaveChanges() > 0;
+
+            var projects = _context.Projekty
+                .Include(x => x.Status)
+                .Include(x => x.Rodzaj)
+                .ToList();
+
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult SubmitEditProject(ProjectFormViewModel projectFormVM)
+        {
+            var project = projectFormVM.Projekt;
+            var projectInDb = _context.Projekty.FirstOrDefault(x => x.Id == project.Id);
+
+            projectInDb.StatusId = project.StatusId;
+            projectInDb.Temat = project.Temat;
+            projectInDb.RodzajId = project.RodzajId;
+            projectInDb.DataRozpoczecia = project.DataRozpoczecia;
+            projectInDb.DataZakonczenia = project.DataZakonczenia;
+            projectInDb.Kwota = project.Kwota;
+            projectInDb.Uwagi = project.Uwagi;
+            projectInDb.Nr = project.Nr;
+
+            _context.SaveChanges();
+            ModelState.Clear();
+
+            var statuses = _context.Statusy.ToList();
+            var types = _context.Rodzaje.ToList();
+
+			projectFormVM.Projekt = new()
+			{
+				DataRozpoczecia = DateTime.Now,
+				DataZakonczenia = DateTime.Now
+			};
+
+			projectFormVM.Rodzaje = types;
+            projectFormVM.Statusy = statuses;
+
+            return View("ProjectForm", projectFormVM);
         }
 
         public IActionResult Projects()
@@ -239,6 +315,42 @@ namespace ProjektyBazyDanych.Controllers
                 .ToList();
 
             return View(projects);
+        }
+
+        public IActionResult ProjectsByType(ProjectsByViewModel vm)
+        {
+            var projects = _context.Projekty
+                .Include(x => x.Status)
+                .Include(x => x.Rodzaj)
+                .Where(x => vm.DropdownId == 0 || x.RodzajId == vm.DropdownId)
+                .ToList();
+
+            var statuses = _context.Statusy.ToList();
+            var types = _context.Rodzaje.ToList();
+
+            vm.Projekty = projects;
+            vm.Statusy = statuses;
+            vm.Rodzaje = types;
+
+            return View(vm);
+        }
+
+        public IActionResult ProjectsByStatus(ProjectsByViewModel vm)
+        {
+            var projects = _context.Projekty
+                .Include(x => x.Status)
+                .Include(x => x.Rodzaj)
+                .Where(x => vm.DropdownId == 0 || x.StatusId == vm.DropdownId)
+                .ToList();
+
+            var statuses = _context.Statusy.ToList();
+            var types = _context.Rodzaje.ToList();
+
+            vm.Projekty = projects;
+            vm.Statusy = statuses;
+            vm.Rodzaje = types;
+
+            return View(vm);
         }
 
         public IActionResult Privacy()

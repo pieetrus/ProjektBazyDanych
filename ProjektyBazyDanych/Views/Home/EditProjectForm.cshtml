@@ -1,0 +1,95 @@
+﻿@using ProjektyBazyDanych.ViewModels
+@{
+    ViewData["Title"] = "Edytuj projekt";
+}
+
+@model ProjectFormViewModel
+
+
+@using (Html.BeginForm("SubmitEditProject", "Home"))
+{ 
+
+        <h2>Edytuj projekt</h2>
+        
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(x=> x.Projekt.Id)
+
+        <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Projekt.RodzajId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(p => p.Projekt.RodzajId,
+                new SelectList(Model.Rodzaje, "Id", "Nazwa")
+                , new { @class = "form-control", @id = "drop-down-list-positions" }) 
+                @Html.ValidationMessageFor(model => model.Projekt.RodzajId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Projekt.StatusId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(p => p.Projekt.StatusId,
+                new SelectList(Model.Statusy, "Id", "Nazwa")
+                , new { @class = "form-control", @id = "drop-down-list-positions" }) 
+                @Html.ValidationMessageFor(model => model.Projekt.StatusId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Projekt.Nr, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Projekt.Nr, new { htmlAttributes = new { @class = "form-control", @style="width:400px" } })
+                @Html.ValidationMessageFor(model => model.Projekt.Nr, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Projekt.Temat, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Projekt.Temat, new { htmlAttributes = new { @class = "form-control", @style="width:400px" } })
+                @Html.ValidationMessageFor(model => model.Projekt.Temat, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Projekt.DataRozpoczecia, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Projekt.DataRozpoczecia, new { htmlAttributes = new { @class = "form-control", @style="width:400px" } })
+                @Html.ValidationMessageFor(model => model.Projekt.DataRozpoczecia, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Projekt.DataZakonczenia, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Projekt.DataZakonczenia, new { htmlAttributes = new { @class = "form-control", @style="width:400px"} })
+                @Html.ValidationMessageFor(model => model.Projekt.DataZakonczenia, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Projekt.Kwota, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Projekt.Kwota, new { htmlAttributes = new { @class = "form-control", @style="width:400px" } })
+                @Html.ValidationMessageFor(model => model.Projekt.Kwota, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+         <div class="form-group">
+            @Html.LabelFor(model => model.Projekt.Uwagi, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Projekt.Uwagi, new { htmlAttributes = new { @class = "form-control", @style="width:400px" } })
+                @Html.ValidationMessageFor(model => model.Projekt.Uwagi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-top:20px">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Zapisz" class="btn btn-primary" />
+            </div>
+        </div>
+</div>
+}

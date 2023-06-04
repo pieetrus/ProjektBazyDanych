@@ -1,0 +1,68 @@
+﻿@using ProjektyBazyDanych.ViewModels
+@model ProjectsByViewModel
+@{
+	ViewBag.Title = "Projekty wg rodzaju";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<div><h2>Wykaz projektów wg rodzaju</h2><br /></div>
+<br />
+
+@using (Html.BeginForm("ProjectsByType", "Home", FormMethod.Get))
+{ 
+	<div class="form-group">
+		@Html.Label("Rodzaj")
+		<div class="col-md-10">
+			@Html.DropDownListFor(p => p.DropdownId,
+			new SelectList(Model.Rodzaje, "Id", "Nazwa"),
+			new { @class = "form-control", @id = "drop-down-list-types" })
+			@Html.ValidationMessageFor(model => model.DropdownId, "", new { @class = "text-danger" })
+		</div>
+	</div>
+
+	<div class="form-group" style="margin-top:20px">
+		<div class="col-md-offset-2 col-md-10">
+			<input type="submit" value="Filtruj" class="btn btn-primary" />
+		</div>
+	</div>
+}
+
+<br />
+
+<table id="myTable" class="table table-bordered table-responsive table-hover">
+	<thead>
+		<tr>
+			<th>Status projektu</th>
+			<th>Nr projektu</th>
+			<th>Temat projektu</th>
+			<th>Data rozpoczęcia</th>
+			<th>Data zakończenia</th>
+			<th>Kwota</th>
+			<th>Uwagi</th>
+		</tr>
+	</thead>
+	<tbody>
+		@for (int i = 0; i < Model.Projekty.Count(); i++)
+		{
+			<tr id="project-type-row-@Model.Projekty[i].Id">
+				<td>@Model.Projekty[i].Status.Nazwa</td>
+				<td>@Model.Projekty[i].Nr</td>
+				<td>@Model.Projekty[i].Temat</td>
+				<td>@Model.Projekty[i].DataRozpoczecia</td>
+				<td>@Model.Projekty[i].DataZakonczenia</td>
+				<td>@Model.Projekty[i].Kwota</td>
+				<td>@Model.Projekty[i].Uwagi</td>
+			</tr>
+		}
+	</tbody>
+
+</table>
+
+<script>
+	$(document).ready(function() {
+		$('#myTable').DataTable();
+	});
+</script>

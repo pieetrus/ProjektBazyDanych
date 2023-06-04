@@ -15,16 +15,16 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Repo\ProjektyBazyDanych\ProjektyBazyDanych
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/Repo/ProjektyBazyDanych/ProjektyBazyDanych/Views/Home/AddProject.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZGRQcm9qZWN0LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/Repo/ProjektyBazyDanych/ProjektyBazyDanych/Views/Home/AddProjectStatus.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZGRQcm9qZWN0U3RhdHVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Repo/ProjektyBazyDanych/ProjektyBazyDanych/Views/Home/AddProjectType.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZGRQcm9qZWN0VHlwZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Repo/ProjektyBazyDanych/ProjektyBazyDanych/Views/Home/EditProjectForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFZGl0UHJvamVjdEZvcm0uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Repo/ProjektyBazyDanych/ProjektyBazyDanych/Views/Home/EditProjectStatus.cshtml]
@@ -43,8 +43,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Repo/ProjektyBazyDanych/ProjektyBazyDanych/Views/Home/ProjectForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9qZWN0Rm9ybS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Repo/ProjektyBazyDanych/ProjektyBazyDanych/Views/Home/Projects.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9qZWN0cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Repo/ProjektyBazyDanych/ProjektyBazyDanych/Views/Home/ProjectsByStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9qZWN0c0J5U3RhdHVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Repo/ProjektyBazyDanych/ProjektyBazyDanych/Views/Home/ProjectsByType.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9qZWN0c0J5VHlwZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Repo/ProjektyBazyDanych/ProjektyBazyDanych/Views/Shared/Error.cshtml]
