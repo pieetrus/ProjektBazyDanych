@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjektyBazyDanych.Entities;
-using ProjektyBazyDanych.Models;
 using ProjektyBazyDanych.ViewModels;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ProjektyBazyDanych.Controllers
@@ -251,6 +251,53 @@ namespace ProjektyBazyDanych.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult SearchProject(int Id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SearchProject(SearchViewModel vm)
+        {
+            IList<Projekt> model = new List<Projekt>();
+
+			if (!string.IsNullOrEmpty(vm.Nr))
+			{
+				model = _context.Projekty
+                    .Include(x => x.Rodzaj)
+                    .Include(x => x.Status)
+                    .Where(x => x.Nr == vm.Nr)
+                    .ToList();
+			}
+			else if (!string.IsNullOrEmpty(vm.Temat))
+			{
+                model = _context.Projekty
+                    .Include(x => x.Rodzaj)
+                    .Include(x => x.Status)
+                    .Where(x => x.Temat == vm.Temat)
+                    .ToList();
+            }
+            else if (vm.DataZakonczenia != null && vm.DataRozpoczecia != null)
+            {
+                model = _context.Projekty
+                    .Include(x => x.Rodzaj)
+                    .Include(x => x.Status)
+                    .Where(x => x.DataZakonczenia == vm.DataZakonczenia && x.DataRozpoczecia == vm.DataRozpoczecia)
+                    .ToList();
+            }
+            else if (vm.KwotaOd != null && vm.KwotaDo != null)
+            {
+                model = _context.Projekty
+                    .Include(x => x.Rodzaj)
+                    .Include(x => x.Status)
+                    .Where(x => x.Kwota > vm.KwotaOd && x.Kwota < vm.KwotaDo)
+                    .ToList();
+            }
+
+            return View("ProjectDetails", model);
+        }
+
 
         [HttpDelete]
         public ActionResult DeleteProject(int Id)
@@ -356,12 +403,6 @@ namespace ProjektyBazyDanych.Controllers
         public IActionResult Privacy()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

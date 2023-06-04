@@ -1,0 +1,48 @@
+﻿@using ProjektyBazyDanych.Entities
+@model IList<Projekt>
+
+@{
+	ViewBag.Title = "Szczegóły projektu";
+}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<div><h2>Szczegóły projektu</h2><br /></div>
+<br />
+
+<table id="myTable" class="table table-bordered table-responsive table-hover">
+	<thead>
+		<tr>
+			<th>Rodzaj projektu</th>
+			<th>Nr projektu</th>
+			<th>Temat projektu</th>
+			<th>Data rozpoczęcia</th>
+			<th>Data zakończenia</th>
+			<th>Kwota</th>
+			<th>Uwagi</th>
+		</tr>
+	</thead>
+	<tbody>
+		@for (var i = 0; i < Model.Count; i++)
+		{
+			<tr id="project-row-@Model[i].Id">
+				<td>@Model[i].Rodzaj.Nazwa</td>
+				<td>@Model[i].Nr</td>
+				<td>@Model[i].Temat</td>
+				<td>@Model[i].DataRozpoczecia</td>
+				<td>@Model[i].DataZakonczenia</td>
+				<td>@Model[i].Kwota</td>
+				<td>@Model[i].Uwagi</td>
+			</tr>
+		}
+	</tbody>
+
+</table>
+
+<script>
+	$(document).ready(function() {
+		$('#myTable').DataTable();
+	});
+</script>
