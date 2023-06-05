@@ -1,0 +1,56 @@
+﻿@using BasketballLeagueDbProject.ViewModels
+@model TeamFormViewModel
+@{
+    ViewData["Title"] = "Formularz drużyny";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<br />
+
+<h1>Formularz drużyny</h1>
+<hr />
+
+
+@using (Html.BeginForm("SubmitTeamForm", "Home"))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Zespol.IdZespolu);
+
+    <div class="form-group" style="width:300px; margin-bottom:10px">
+        @Html.LabelFor(u => u.Zespol.Nazwa)
+        @Html.TextBoxFor(u => u.Zespol.Nazwa, new { @class = "form-control" })
+        @Html.ValidationMessageFor(u => u.Zespol.Nazwa)
+    </div>
+
+    <div class="form-group" style="width:300px; margin-bottom:10px">
+        @Html.LabelFor(u => u.Zespol.RokZalozenia)
+        @Html.TextBoxFor(u => u.Zespol.RokZalozenia, new { @class = "form-control" })
+        @Html.ValidationMessageFor(u => u.Zespol.RokZalozenia)
+    </div>
+
+    <div class="form-group" style="width:300px; margin-bottom:10px">
+        @Html.LabelFor(u => u.Zespol.IdTrenera)
+        @Html.DropDownListFor(p => p.Zespol.IdTrenera,
+                new SelectList(Model.Trenerzy, "IdTrenera", "Nazwisko")
+                , new { @class = "form-control", @id = "drop-down-list-positions" })        
+        @Html.ValidationMessageFor(u => u.Zespol.IdTrenera)
+    </div>
+
+    @if (Model == null)
+    {
+        <button type="submit" class="btn btn-primary">Dodaj drużynę</button>
+    }
+    else
+    {
+        <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+    }
+}
+
+<script>
+$(document).ready(function () {
+   $(".datepicker").datepicker({
+      dateFormat: "dd-mm-yy",
+      changemonth: true,
+      changeyear: true
+      });
+   });
+</script>

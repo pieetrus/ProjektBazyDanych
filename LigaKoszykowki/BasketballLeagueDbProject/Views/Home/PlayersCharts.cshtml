@@ -1,0 +1,28 @@
+﻿@{  
+    ViewBag.Title = "Zawodnicy graficznie";  
+} 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<div id="chartContainer1" style="height: 300px; width: 100%;"></div>
+
+<script>
+
+    $(document).ready(function() {
+		  var chart1 = new CanvasJS.Chart("chartContainer1", {
+            theme: "light2",
+            animationEnabled: true,
+            title: {
+                text: "Zawodnicy według zespołów"
+            },
+            data: [
+            {
+                type: "column",
+                dataPoints: @Html.Raw(ViewBag.DataPoints)
+            }
+            ]
+        });
+
+        chart1.render();
+	});
+
+</script>

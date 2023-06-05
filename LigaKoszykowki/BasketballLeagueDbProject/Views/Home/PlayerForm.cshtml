@@ -1,0 +1,83 @@
+﻿@using BasketballLeagueDbProject.ViewModels
+@model PlayerFormViewModel
+@{
+    ViewData["Title"] = "Formularz zawodnika";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<br />
+
+<h1>Formularz zawodnika</h1>
+<hr />
+
+
+@using (Html.BeginForm("SubmitPlayerForm", "Home"))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Zawodnik.IdZawodnika);
+
+    <div class="form-group" style="width:300px; margin-bottom:10px">
+        @Html.LabelFor(u => u.Zawodnik.Imie)
+        @Html.TextBoxFor(u => u.Zawodnik.Imie, new { @class = "form-control" })
+        @Html.ValidationMessageFor(u => u.Zawodnik.Imie)
+    </div>
+
+    <div class="form-group" style="width:300px; margin-bottom:10px">
+        @Html.LabelFor(u => u.Zawodnik.Nazwisko)
+        @Html.TextBoxFor(u => u.Zawodnik.Nazwisko, new { @class = "form-control" })
+        @Html.ValidationMessageFor(u => u.Zawodnik.Nazwisko)
+    </div>
+
+    <div class="form-group" style="width:300px; margin-bottom:10px">
+        @Html.LabelFor(u => u.Zawodnik.DataUrodzenia)
+
+        @Html.EditorFor(u => u.Zawodnik.DataUrodzenia, new { htmlAttributes = new {@class = "datepicker"} })
+        @Html.ValidationMessageFor(u => u.Zawodnik.DataUrodzenia)
+    </div>
+
+    <div class="form-group" style="width:300px; margin-bottom:10px">
+        @Html.LabelFor(u => u.Zawodnik.Pozycja)
+        @Html.DropDownListFor(p => p.Zawodnik.IdPozycji,
+                new SelectList(Model.Pozycje, "IdPozycji", "Nazwa")
+                , new { @class = "form-control", @id = "drop-down-list-positions" })        
+        @Html.ValidationMessageFor(u => u.Zawodnik.Pozycja)
+    </div>
+
+    <div class="form-group" style="width:300px; margin-bottom:10px">
+        @Html.LabelFor(u => u.Zawodnik.IdZespolu)
+        @Html.DropDownListFor(p => p.Zawodnik.IdZespolu,
+                new SelectList(Model.Zespoly, "IdZespolu", "Nazwa")
+                , new { @class = "form-control", @id = "drop-down-list-positions" })   
+        @Html.ValidationMessageFor(u => u.Zawodnik.IdZespolu)
+    </div>
+
+     <div class="form-group" style="width:300px; margin-bottom:10px">
+        @Html.LabelFor(u => u.Zawodnik.Wzrost)
+        @Html.TextBoxFor(u => u.Zawodnik.Wzrost, new { @class = "form-control" })
+        @Html.ValidationMessageFor(u => u.Zawodnik.Wzrost)
+    </div>
+
+     <div class="form-group" style="width:300px; margin-bottom:10px">
+        @Html.LabelFor(u => u.Zawodnik.Waga)
+        @Html.TextBoxFor(u => u.Zawodnik.Waga, new { @class = "form-control" })
+        @Html.ValidationMessageFor(u => u.Zawodnik.Waga)
+    </div>
+
+    @if (Model == null)
+    {
+        <button type="submit" class="btn btn-primary">Dodaj zawodnika</button>
+    }
+    else
+    {
+        <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+    }
+}
+
+<script>
+$(document).ready(function () {
+   $(".datepicker").datepicker({
+      dateFormat: "dd-mm-yy",
+      changemonth: true,
+      changeyear: true
+      });
+   });
+</script>

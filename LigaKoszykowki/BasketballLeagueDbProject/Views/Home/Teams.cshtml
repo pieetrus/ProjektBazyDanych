@@ -1,0 +1,55 @@
+﻿@model IList<Zespoly>  
+  
+@{  
+    ViewBag.Title = "Zespoły";  
+}  
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<input type="button" class="btn btn-primary" value="Dodaj nową drużynę" onclick="location.href='@Url.Action("TeamForm", "Home")'" style="margin-bottom:20px" />
+
+<table id="myTable" class="table table-bordered table-responsive table-hover">  
+	<thead>
+        <tr>  
+            <th width="170px"></th>  
+            <th>Nazwa</th>  
+            <th>Rok Zalozenia</th> 
+            <th>Trener</th>  
+        </tr>  
+	</thead>
+	<tbody>
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        <tr id="row-@Model[i].IdZespolu">  
+            <td>
+                <input type="button" class="btn btn-primary" value="Edytuj" onclick="location.href='@Url.Action("TeamForm", "Home", Model[i])'" />
+                <input type="button" class="btn btn-danger" value="Usuń" onclick="btnRemoveClick(@Model[i].IdZespolu)" />
+            </td>  
+            <td>@Model[i].Nazwa</td>
+            <td>@Model[i].RokZalozenia</td>
+            <td>@Model[i].Trener.Imie @Model[i].Trener.Nazwisko</td>
+        </tr>  
+    }
+	</tbody>
+</table> 
+
+<script>
+
+    function btnRemoveClick(id) {
+			$.ajax({
+				url: "/Home/RemoveTeam",
+				type: "DELETE",
+				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+				data: { id: id },
+				success: function() {
+					$("#row-" + id).remove();
+				},
+			});
+		}
+
+    $(document).ready(function() {
+		$('#myTable').DataTable();
+	});
+</script>

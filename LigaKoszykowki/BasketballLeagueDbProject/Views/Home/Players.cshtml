@@ -1,0 +1,62 @@
+﻿@model IList<Zawodnicy>  
+  
+@{  
+    ViewBag.Title = "Zawodnicy";  
+}  
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+<input type="button" class="btn btn-primary" value="Dodaj nowego zawodnika" onclick="location.href='@Url.Action("PlayerForm", "Home")'" style="margin-bottom:20px" />
+
+<table id="myTable" class="table table-bordered table-responsive table-hover">  
+	<thead>
+        <tr>  
+            <th width="170px"></th>  
+            <th>Imię</th>  
+            <th>Nazwisko</th> 
+            <th>Pozycja</th>  
+            <th>Zespół</th>  
+            <th>Wzrost</th>  
+            <th>Waga</th>  
+            <th>Data urodzenia</th>  
+        </tr>  
+	</thead>
+	<tbody>
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        <tr id="row-@Model[i].IdZawodnika">  
+            <td>
+                <input type="button" class="btn btn-primary" value="Edytuj" onclick="location.href='@Url.Action("PlayerForm", "Home", Model[i])'" />
+                <input type="button" class="btn btn-danger" value="Usuń" onclick="btnRemoveClick(@Model[i].IdZawodnika)" />
+            </td>  
+            <td>@Model[i].Imie</td>
+            <td>@Model[i].Nazwisko</td>
+            <td>@Model[i].Pozycja.Nazwa</td>
+            <td>@Model[i].Zespol.Nazwa</td>
+            <td>@Model[i].Wzrost</td>
+            <td>@Model[i].Waga</td>
+            <td>@Model[i].DataUrodzenia</td>
+        </tr>  
+    }
+	</tbody>
+</table> 
+
+<script>
+     function btnRemoveClick(id) {
+			$.ajax({
+				url: "/Home/RemovePlayer",
+				type: "DELETE",
+				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+				data: { id: id },
+				success: function() {
+					$("#row-" + id).remove();
+				},
+			});
+		}
+
+    $(document).ready(function() {
+		$('#myTable').DataTable();
+	});
+</script>

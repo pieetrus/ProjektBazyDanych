@@ -1,0 +1,77 @@
+﻿@using BasketballLeagueDbProject.ViewModels
+@{
+    ViewData["Title"] = "Szukaj zawodników";
+}
+
+@model SearchViewModel
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+@using (Html.BeginForm("Search", "Home", FormMethod.Post))
+{ 
+        <h2>Szukaj zawodników wg wzrostu</h2>
+        
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WzrostOd, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.WzrostOd, new { htmlAttributes = new { @class = "form-control", @style="width:400px" } })
+                @Html.ValidationMessageFor(model => model.WzrostOd, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+          <div class="form-group">
+            @Html.LabelFor(model => model.WzrostDo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.WzrostDo, new { htmlAttributes = new { @class = "form-control", @style="width:400px" } })
+                @Html.ValidationMessageFor(model => model.WzrostDo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="margin-top:20px">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Szukaj" class="btn btn-primary" />
+            </div>
+        </div>
+</div>
+}
+
+<table id="myTable" class="table table-bordered table-responsive table-hover">  
+	<thead>
+        <tr>  
+            <th>Imię</th>  
+            <th>Nazwisko</th> 
+            <th>Pozycja</th>  
+            <th>Zespół</th>  
+            <th>Wzrost</th>  
+            <th>Waga</th>  
+            <th>Data urodzenia</th>  
+        </tr>  
+	</thead>
+	<tbody>
+    @for (int i = 0; i < Model.Players.Count(); i++)
+    {
+        <tr id="row-@Model.Players[i].IdZawodnika">  
+            <td>@Model.Players[i].Imie</td>
+            <td>@Model.Players[i].Nazwisko</td>
+            <td>@Model.Players[i].Pozycja.Nazwa</td>
+            <td>@Model.Players[i].Zespol.Nazwa</td>
+            <td>@Model.Players[i].Wzrost</td>
+            <td>@Model.Players[i].Waga</td>
+            <td>@Model.Players[i].DataUrodzenia</td>
+        </tr>  
+    }
+	</tbody>
+</table> 
+
+<script>
+    $(document).ready(function() {
+		$('#myTable').DataTable();
+	});
+</script>
